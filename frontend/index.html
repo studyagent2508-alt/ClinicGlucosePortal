@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kaarya Wellness Center glucose diary and doctor monitoring portal." />
+    <meta name="theme-color" content="#087f5b" />
+    <title>Kaarya Wellness | Glucose Care Portal</title>
+    <link rel="icon" href="assets/kaarya-logo.png" />
+    <link rel="stylesheet" href="styles.css?v=3.4.0" />
+  </head>
+  <body>
+    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+    <section class="auth-view" id="authView">
+      <header class="public-header">
+        <div class="brand-lockup">
+          <span class="brand-mark"><img src="assets/kaarya-logo.png" alt="Kaarya Wellness Center four-hand logo" /></span>
+          <span><strong>KAARYA WELLNESS</strong><small>Nurturing health solutions</small></span>
+        </div>
+        <div class="clinic-contact">
+          <span><i data-lucide="map-pin"></i> Sector 81, Greater Faridabad</span>
+          <a href="tel:+918076168058"><i data-lucide="phone"></i> 80761 68058</a>
+        </div>
+      </header>
+
+      <main class="auth-layout">
+        <section class="auth-card" aria-labelledby="authTitle">
+          <div class="role-tabs" id="roleTabs" role="tablist" aria-label="Select portal">
+            <button class="role-tab is-active" type="button" role="tab" aria-selected="true" data-auth-role="patient"><i data-lucide="user-round"></i> Patient</button>
+            <button class="role-tab" type="button" role="tab" aria-selected="false" data-auth-role="doctor"><i data-lucide="stethoscope"></i> Doctor</button>
+          </div>
+          <div class="auth-copy">
+            <span class="eyebrow"><i data-lucide="shield-check"></i> Secure glucose diary</span>
+            <h1 id="authTitle">Track your glucose. Understand the pattern.</h1>
+            <p id="authSubtitle">Record daily readings and share a clear trend with Dr. Prashant Bhatia.</p>
+          </div>
+          <div id="signInPanel">
+            <form class="identity-form" id="identityForm">
+              <label for="identityInput">Email address</label>
+              <div class="input-shell"><i data-lucide="mail"></i><input id="identityInput" type="email" autocomplete="email" placeholder="Enter your email address" required /></div>
+              <label for="passwordInput">Password</label>
+              <div class="input-shell"><i data-lucide="lock-keyhole"></i><input id="passwordInput" type="password" autocomplete="current-password" placeholder="Enter password" required /></div>
+              <button class="primary-button full-button" type="submit"><span id="identityAction">Sign in securely</span><i data-lucide="arrow-right"></i></button>
+            </form>
+            <p class="registration-line" id="registrationLine">New patient? <button class="text-button" type="button" id="registerButton">Create an account</button></p>
+            <div class="doctor-access-note is-hidden" id="doctorAccessNote"><i data-lucide="shield-lock"></i><span><strong>Doctor accounts are issued by the clinic.</strong> Selecting Doctor does not grant doctor access; the account must belong to the Cognito <code>DOCTOR</code> group.</span></div>
+          </div>
+
+          <div class="auth-step is-hidden" id="registerPanel">
+            <button class="auth-back" type="button" data-auth-back><i data-lucide="arrow-left"></i> Back to sign in</button>
+            <form class="registration-form" id="registrationForm">
+              <label><span>Full name</span><input name="name" autocomplete="name" placeholder="Patient's full name" required /></label>
+              <label><span>Email address</span><input name="email" type="email" autocomplete="email" placeholder="patient@example.com" required /></label>
+              <p class="field-help"><i data-lucide="mail-check"></i> We’ll send the verification code to this email address.</p>
+              <div class="registration-thresholds">
+                <div class="registration-threshold-heading"><i data-lucide="target"></i><div><strong>Your glucose target ranges</strong><span>Enter the limits advised by your doctor. You can update them later in your profile.</span></div></div>
+                <div class="threshold-label">Fasting glucose (mg/dL)</div>
+                <div class="form-pair"><label><span>Minimum</span><input name="fastingTargetMin" type="number" inputmode="numeric" min="40" max="399" placeholder="Minimum" required /></label><label><span>Maximum</span><input name="fastingTargetMax" type="number" inputmode="numeric" min="41" max="400" placeholder="Maximum" required /></label></div>
+                <div class="threshold-label">Non-fasting glucose (mg/dL)</div>
+                <div class="form-pair"><label><span>Minimum</span><input name="nonFastingTargetMin" type="number" inputmode="numeric" min="40" max="399" placeholder="Minimum" required /></label><label><span>Maximum</span><input name="nonFastingTargetMax" type="number" inputmode="numeric" min="41" max="400" placeholder="Maximum" required /></label></div>
+              </div>
+              <div class="form-pair"><label><span>Create password</span><input name="password" type="password" autocomplete="new-password" minlength="10" required /></label><label><span>Confirm password</span><input name="confirmPassword" type="password" autocomplete="new-password" minlength="10" required /></label></div>
+              <p class="password-rules">Use at least 10 characters with uppercase, lowercase, number and symbol.</p>
+              <button class="primary-button full-button" type="submit"><i data-lucide="user-plus"></i> Create patient account</button>
+            </form>
+          </div>
+
+          <div class="auth-step is-hidden" id="confirmationPanel">
+            <button class="auth-back" type="button" data-auth-back><i data-lucide="arrow-left"></i> Back to sign in</button>
+            <div class="verification-icon"><i data-lucide="mail-check"></i></div>
+            <h2>Verify your email</h2>
+            <p id="confirmationCopy">Enter the verification code sent to your email address.</p>
+            <form class="verification-form" id="confirmationForm"><label><span>Verification code</span><input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="Enter code" required /></label><button class="primary-button full-button" type="submit"><i data-lucide="badge-check"></i> Verify and sign in</button></form>
+            <button class="text-button resend-button" type="button" id="resendCodeButton">Send a new code</button>
+          </div>
+
+          <div class="auth-step is-hidden" id="newPasswordPanel">
+            <button class="auth-back" type="button" data-auth-back><i data-lucide="arrow-left"></i> Back to sign in</button>
+            <div class="verification-icon"><i data-lucide="key-round"></i></div>
+            <h2>Set a permanent password</h2>
+            <p>Your clinic-issued account requires a new password before first sign-in.</p>
+            <form class="verification-form" id="newPasswordForm"><label><span>New password</span><input name="password" type="password" autocomplete="new-password" minlength="10" required /></label><label><span>Confirm new password</span><input name="confirmPassword" type="password" autocomplete="new-password" minlength="10" required /></label><button class="primary-button full-button" type="submit"><i data-lucide="key-round"></i> Set password and continue</button></form>
+          </div>
+          <div class="demo-access">
+            <span>Preview without setup</span>
+            <div><button class="secondary-button" type="button" data-demo-role="patient"><i data-lucide="droplets"></i> Patient demo</button><button class="secondary-button" type="button" data-demo-role="doctor"><i data-lucide="activity"></i> Doctor demo</button></div>
+          </div>
+        </section>
+
+        <aside class="care-panel" aria-label="Kaarya glucose monitoring preview">
+          <div class="care-orb orb-one"></div><div class="care-orb orb-two"></div>
+          <div class="care-panel-content">
+            <div class="care-topline"><span class="live-dot"></span> Connected care, one reading at a time</div>
+            <h2>A simple daily habit.<br /><span>A clearer clinical picture.</span></h2>
+            <p>Patients record glucose in seconds. The doctor sees trends, exceptions and the complete reading history.</p>
+            <article class="glucose-preview-card">
+              <div class="preview-card-top"><div><small>7-day glucose</small><strong>124 <em>mg/dL</em></strong></div><span class="range-pill"><i data-lucide="circle-check"></i> 82% in range</span></div>
+              <svg viewBox="0 0 620 230" role="img" aria-label="Example glucose trend">
+                <defs><linearGradient id="loginArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#17a673" stop-opacity=".34"/><stop offset="100%" stop-color="#17a673" stop-opacity="0"/></linearGradient></defs>
+                <rect x="24" y="70" width="572" height="92" rx="14" class="preview-target" />
+                <g class="preview-grid"><line x1="24" y1="48" x2="596" y2="48"/><line x1="24" y1="116" x2="596" y2="116"/><line x1="24" y1="184" x2="596" y2="184"/></g>
+                <path d="M24 144 C72 131 92 92 132 108 S196 157 238 127 S304 84 350 103 S416 154 458 124 S531 81 596 96 L596 204 L24 204Z" fill="url(#loginArea)" />
+                <path d="M24 144 C72 131 92 92 132 108 S196 157 238 127 S304 84 350 103 S416 154 458 124 S531 81 596 96" class="preview-line" />
+                <g class="preview-points"><circle cx="24" cy="144" r="5"/><circle cx="132" cy="108" r="5"/><circle cx="238" cy="127" r="5"/><circle cx="350" cy="103" r="5"/><circle cx="458" cy="124" r="5"/><circle cx="596" cy="96" r="5"/></g>
+              </svg>
+              <div class="preview-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </article>
+            <article class="doctor-strip"><div class="doctor-avatar">PB</div><div><small>Your physician</small><strong>Dr. Prashant Bhatia</strong><span>MBBS, MD (TB &amp; Chest) · FNB Critical Care Medicine</span></div><span class="verified-mark"><i data-lucide="badge-check"></i></span></article>
+          </div>
+          <footer><i data-lucide="map-pinned"></i> A-22, Vipul Plaza, Sector 81, Greater Faridabad</footer>
+        </aside>
+      </main>
+    </section>
+
+    <div class="portal-shell is-hidden" id="portalShell">
+      <aside class="sidebar" id="sidebar">
+        <button class="brand-lockup sidebar-brand" type="button" data-signout><span class="brand-mark"><img src="assets/kaarya-logo.png" alt="Kaarya Wellness Center logo" /></span><span><strong>KAARYA</strong><small>Glucose Care</small></span></button>
+        <nav class="side-nav" aria-label="Portal navigation"><p>Workspace</p><div id="navigation"></div></nav>
+        <article class="sidebar-doctor"><div class="doctor-avatar small">PB</div><div><small>Care team</small><strong>Dr. Prashant Bhatia</strong><span><b></b> Monitoring active</span></div></article>
+        <button class="signout-button" type="button" data-signout><i data-lucide="log-out"></i> Sign out</button>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace-header">
+          <button class="icon-button mobile-menu" id="menuButton" type="button" aria-label="Open navigation"><i data-lucide="menu"></i></button>
+          <div class="header-title"><small id="headerContext">Patient portal</small><strong id="headerScreenTitle">Overview</strong></div>
+          <div class="header-actions"><span class="environment-chip" id="environmentChip"><b></b> Demo data</span><button class="user-chip" type="button" id="userChip"><span id="userInitials">AS</span><span><strong id="userName">Ananya Sharma</strong><small id="userRole">Patient</small></span></button></div>
+        </header>
+
+        <div class="workspace-body">
+          <section class="portal-screen" data-screen="patient-overview">
+            <div class="page-heading"><div><p class="page-kicker" id="patientToday">Today</p><h1 id="patientGreeting">Good evening, Ananya</h1><p>Your glucose picture is ready. Add today’s reading or review your trend.</p></div><button class="primary-button" type="button" data-nav="log"><i data-lucide="plus"></i> Record glucose</button></div>
+            <div class="metric-grid" id="patientMetricGrid">
+              <article class="metric-card metric-primary"><span class="metric-icon"><i data-lucide="droplets"></i></span><div><small>Latest reading</small><strong id="latestReading">126 <em>mg/dL</em></strong><span id="latestReadingMeta">Today · 8:10 am · Fasting</span></div><b class="status-badge good" id="latestStatus">In range</b></article>
+              <article class="metric-card"><span class="metric-icon green"><i data-lucide="chart-no-axes-column-increasing"></i></span><div><small>7-day average</small><strong id="averageReading">124 <em>mg/dL</em></strong><span>Across all recorded readings</span></div></article>
+              <article class="metric-card"><span class="metric-icon orange"><i data-lucide="target"></i></span><div><small>Time in range</small><strong id="rangeReading">82<em>%</em></strong><span id="targetRangeCopy">Fasting 70–130 · Non-fasting 70–180 mg/dL</span></div></article>
+              <article class="metric-card"><span class="metric-icon blue"><i data-lucide="calendar-check-2"></i></span><div><small>Logging streak</small><strong id="streakReading">6 <em>days</em></strong><span>Consistency builds better trends</span></div></article>
+            </div>
+            <div class="two-column-grid overview-grid">
+              <article class="panel chart-panel"><div class="panel-header"><div><span class="section-kicker">Recent pattern</span><h2>Glucose trend</h2></div><button class="text-button" type="button" data-nav="insights">View full insights <i data-lucide="arrow-up-right"></i></button></div><div class="chart-legend"><span><b class="legend-line"></b> Glucose</span><span><b class="legend-band fasting"></b> Fasting target</span><span><b class="legend-band non-fasting"></b> Non-fasting target</span></div><div class="chart-wrap"><svg id="overviewChart" viewBox="0 0 760 300" role="img" aria-label="Seven-day glucose trend"></svg></div></article>
+              <article class="panel daily-action-panel"><div class="panel-header"><div><span class="section-kicker">Today</span><h2>Your glucose diary</h2></div><span class="date-tile" id="dateTile"><b>21</b><small>SEP</small></span></div><div class="today-status" id="todayStatus"><span class="today-status-icon"><i data-lucide="check"></i></span><div><strong>Morning reading recorded</strong><span>126 mg/dL at 8:10 am</span></div></div><button class="record-cta" type="button" data-nav="log"><span><i data-lucide="plus"></i></span><div><strong>Add another reading</strong><small>After a meal, before dinner or at bedtime</small></div><i data-lucide="chevron-right"></i></button><div class="micro-insight" id="overviewInsight"><i data-lucide="sparkles"></i><p><strong>Your weekly pattern is steady.</strong><span>Most readings are within your configured range.</span></p></div></article>
+            </div>
+            <article class="panel recent-panel"><div class="panel-header"><div><span class="section-kicker">Latest entries</span><h2>Recent glucose readings</h2></div><button class="text-button" type="button" data-nav="insights">View history</button></div><div class="reading-list" id="overviewReadingList"></div></article>
+          </section>
+
+          <section class="portal-screen is-hidden" data-screen="patient-profile">
+            <div class="page-heading compact-heading"><div><p class="page-kicker">Patient account</p><h1>Your health profile</h1><p>These details help Dr. Prashant interpret your glucose pattern in context.</p></div></div>
+            <form class="panel profile-form" id="profileForm">
+              <div class="form-section-heading"><span><i data-lucide="user-round"></i></span><div><h2>Personal information</h2><p>Keep your contact and basic health details current.</p></div></div>
+              <div class="form-grid"><label class="span-two"><span>Full name</span><input name="name" autocomplete="name" required /></label><label><span>Date of birth</span><input name="dateOfBirth" type="date" required /></label><label><span>Gender</span><select name="gender" required><option value="">Select</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></label><label><span>Email address</span><input name="email" type="email" autocomplete="email" /></label><label><span>Mobile number</span><input name="phone" autocomplete="tel" placeholder="+91" /></label><label class="span-two"><span>City / address</span><input name="city" autocomplete="address-level2" required /></label></div>
+              <div class="form-section-heading"><span><i data-lucide="heart-pulse"></i></span><div><h2>Diabetes and glucose settings</h2><p>Use the target shared by your treating clinician.</p></div></div>
+              <div class="form-grid"><label><span>Diabetes type</span><select name="diabetesType"><option>Type 1</option><option selected>Type 2</option><option>Gestational</option><option>Prediabetes</option><option>Not diagnosed</option><option>Other</option></select></label><label><span>Year diagnosed</span><input name="diagnosisYear" type="number" min="1950" max="2100" /></label><div class="threshold-profile-heading span-two"><strong>Fasting glucose target</strong><span>Applied only when the reading context is Fasting.</span></div><label><span>Fasting minimum (mg/dL)</span><input name="fastingTargetMin" type="number" min="40" max="399" required /></label><label><span>Fasting maximum (mg/dL)</span><input name="fastingTargetMax" type="number" min="41" max="400" required /></label><div class="threshold-profile-heading span-two"><strong>Non-fasting glucose target</strong><span>Applied to before/after meals, bedtime and random readings.</span></div><label><span>Non-fasting minimum (mg/dL)</span><input name="nonFastingTargetMin" type="number" min="40" max="399" required /></label><label><span>Non-fasting maximum (mg/dL)</span><input name="nonFastingTargetMax" type="number" min="41" max="400" required /></label></div>
+              <div class="form-section-heading"><span><i data-lucide="contact-round"></i></span><div><h2>Emergency contact</h2><p>Someone the clinic may contact when necessary.</p></div></div>
+              <div class="form-grid"><label><span>Contact name</span><input name="emergencyName" /></label><label><span>Contact mobile</span><input name="emergencyPhone" autocomplete="tel" /></label></div>
+              <label class="consent-row"><input name="sharingConsent" type="checkbox" required /><span>I consent to share my profile and glucose records with Dr. Prashant Bhatia and authorised Kaarya Wellness staff for care review.</span></label>
+              <div class="form-actions"><span id="profileSaveStatus"></span><button class="primary-button" type="submit"><i data-lucide="save"></i> Save profile</button></div>
+            </form>
+          </section>
+
+          <section class="portal-screen is-hidden" data-screen="patient-log">
+            <div class="page-heading compact-heading"><div><p class="page-kicker">Daily diary</p><h1>Record glucose</h1><p>Add the value, time and meal context shown on your glucose meter.</p></div></div>
+            <div class="two-column-grid log-grid">
+              <form class="panel glucose-form" id="glucoseForm"><div class="glucose-input-heading"><span class="glucose-drop"><i data-lucide="droplets"></i></span><div><h2>New reading</h2><p>Values are stored with the exact date and time.</p></div></div><label class="glucose-value-label"><span>Glucose value</span><div><input name="value" type="number" inputmode="decimal" min="20" max="600" placeholder="126" required /><b>mg/dL</b></div></label><div class="form-grid"><label><span>Date</span><input name="date" type="date" required /></label><label><span>Time</span><input name="time" type="time" required /></label><label class="span-two"><span>Reading context</span><select name="context" required><option value="fasting">Fasting</option><option value="before-breakfast">Before breakfast</option><option value="after-breakfast">2 hours after breakfast</option><option value="before-lunch">Before lunch</option><option value="after-lunch">2 hours after lunch</option><option value="before-dinner">Before dinner</option><option value="after-dinner">2 hours after dinner</option><option value="bedtime">Bedtime</option><option value="random">Random</option></select></label><label class="span-two"><span>Notes (optional)</span><textarea name="notes" rows="3" maxlength="240" placeholder="Meal, medicine, exercise or anything unusual"></textarea></label></div><div class="reading-guidance"><i data-lucide="info"></i><span>Enter the number exactly as displayed by your glucose meter. This portal does not replace medical advice.</span></div><button class="primary-button full-button" type="submit"><i data-lucide="check"></i> Save glucose reading</button></form>
+              <article class="panel today-readings-panel"><div class="panel-header"><div><span class="section-kicker">Daily timeline</span><h2>Today’s readings</h2></div><span class="count-pill" id="todayCount">1 entry</span></div><div class="timeline" id="todayTimeline"></div><div class="empty-state is-hidden" id="todayEmpty"><span><i data-lucide="droplets"></i></span><h3>No reading yet today</h3><p>Your first entry will appear here.</p></div></article>
+            </div>
+          </section>
+
+          <section class="portal-screen is-hidden" data-screen="patient-heatmap">
+            <div class="page-heading heatmap-heading"><div><p class="page-kicker">Daily pattern map</p><h1>Glucose heat map</h1><p>Compare each day across fasting, meals and bedtime at a glance.</p></div><div class="range-control" role="group" aria-label="Heat map period"><button type="button" data-heatmap-range="7">7 days</button><button class="is-active" type="button" data-heatmap-range="14">14 days</button><button type="button" data-heatmap-range="30">30 days</button></div></div>
+            <div class="heatmap-summary">
+              <article class="heatmap-stat"><span class="metric-icon green"><i data-lucide="calendar-check-2"></i></span><div><small>Recorded slots</small><strong id="heatmapRecordedSlots">0</strong><span id="heatmapRecordedMeta">0 grid cells contain data</span></div></article>
+              <article class="heatmap-stat"><span class="metric-icon orange"><i data-lucide="target"></i></span><div><small>Slots in target</small><strong id="heatmapInRangePercent">0%</strong><span id="heatmapInRangeMeta">No readings in this period</span></div></article>
+              <article class="heatmap-stat"><span class="metric-icon blue"><i data-lucide="sparkles"></i></span><div><small>Most complete day</small><strong id="heatmapBestDay">—</strong><span id="heatmapBestDayMeta">Record glucose to build the map</span></div></article>
+            </div>
+            <article class="panel heatmap-panel">
+              <div class="panel-header heatmap-panel-header"><div><span class="section-kicker">Meal-time comparison</span><h2 id="heatmapPeriodTitle">Last 14 days</h2><p id="heatmapTargetCopy">Fasting 70–130 · Non-fasting 70–180 mg/dL</p></div><div class="heatmap-legend" aria-label="Heat map legend"><span><b class="low"></b> Below target</span><span><b class="good"></b> In target</span><span><b class="high"></b> Above target</span><span><b class="empty"></b> No reading</span></div></div>
+              <div class="heatmap-empty-notice is-hidden" id="heatmapEmpty"><i data-lucide="info"></i><span>No glucose values were recorded in this period. Empty cells will fill automatically when you add readings.</span></div>
+              <div class="heatmap-scroll"><table class="heatmap-table" aria-label="Glucose readings by day and capture time"><thead id="heatmapHead"></thead><tbody id="heatmapBody"></tbody></table></div>
+              <p class="clinical-disclaimer heatmap-disclaimer"><i data-lucide="triangle-alert"></i> Each cell uses your fasting or non-fasting target according to its reading context. This view is informational and must be interpreted by a qualified clinician.</p>
+            </article>
+          </section>
+
+          <section class="portal-screen is-hidden" data-screen="patient-insights">
+            <div class="page-heading insights-heading"><div><p class="page-kicker">Patterns over time</p><h1>Trends &amp; insights</h1><p>See how your readings move across days, meals and your personal target range.</p></div><div class="range-control" role="group" aria-label="Chart period"><button class="is-active" type="button" data-range="7">7 days</button><button type="button" data-range="30">30 days</button><button type="button" data-range="90">90 days</button></div></div>
+            <div class="metric-grid insight-metrics"><article class="stat-card"><small>Average</small><strong id="insightAverage">124 <em>mg/dL</em></strong><span id="insightAverageDelta">Stable versus prior period</span></article><article class="stat-card"><small>In target range</small><strong id="insightRange">82<em>%</em></strong><span id="insightRangeCount">9 of 11 readings</span></article><article class="stat-card"><small>Highest</small><strong id="insightHigh">186 <em>mg/dL</em></strong><span id="insightHighMeta">After dinner</span></article><article class="stat-card"><small>Lowest</small><strong id="insightLow">88 <em>mg/dL</em></strong><span id="insightLowMeta">Fasting</span></article></div>
+            <article class="panel full-chart-panel"><div class="panel-header"><div><span class="section-kicker">All readings</span><h2 id="chartPeriodTitle">Last 7 days</h2></div><div class="chart-legend"><span><b class="legend-line"></b> Reading</span><span><b class="legend-band fasting"></b> Fasting target</span><span><b class="legend-band non-fasting"></b> Non-fasting target</span></div></div><div class="chart-wrap large"><svg id="insightsChart" viewBox="0 0 980 360" role="img" aria-label="Glucose trend over selected period"></svg></div></article>
+            <div class="two-column-grid insight-lower-grid"><article class="panel insights-panel"><div class="panel-header"><div><span class="section-kicker">Pattern summary</span><h2>What your data shows</h2></div><i class="sparkle-icon" data-lucide="sparkles"></i></div><div class="insight-list" id="insightList"></div><p class="clinical-disclaimer"><i data-lucide="triangle-alert"></i> Automated observations are informational and must be interpreted by a qualified clinician.</p></article><article class="panel history-panel"><div class="panel-header"><div><span class="section-kicker">Reading log</span><h2>Recent history</h2></div></div><div class="table-wrap"><table><thead><tr><th>Date &amp; time</th><th>Context</th><th>Glucose</th><th>Status</th></tr></thead><tbody id="patientHistoryBody"></tbody></table></div></article></div>
+          </section>
+
+          <section class="portal-screen is-hidden" data-screen="doctor-overview">
+            <div class="page-heading doctor-heading"><div><p class="page-kicker" id="doctorToday">Today</p><h1 id="doctorGreeting">Welcome, Dr. Prashant</h1><p>Review every patient’s latest glucose status from one clinical view.</p></div><div class="doctor-search"><i data-lucide="search"></i><input id="patientSearch" placeholder="Search patient name or ID" /></div></div>
+            <div class="metric-grid doctor-metric-grid"><article class="doctor-stat"><span class="metric-icon blue"><i data-lucide="users-round"></i></span><div><small>Monitored patients</small><strong id="doctorPatientCount">5</strong><span>With shared glucose data</span></div></article><article class="doctor-stat"><span class="metric-icon orange"><i data-lucide="triangle-alert"></i></span><div><small>Need attention</small><strong id="doctorAttentionCount">2</strong><span>Latest reading outside target</span></div></article><article class="doctor-stat"><span class="metric-icon green"><i data-lucide="circle-check-big"></i></span><div><small>Within range</small><strong id="doctorRangeCount">3</strong><span>Based on latest reading</span></div></article><article class="doctor-stat"><span class="metric-icon red"><i data-lucide="clock-alert"></i></span><div><small>No recent reading</small><strong id="doctorMissingCount">1</strong><span>No entry in the last 3 days</span></div></article></div>
+            <article class="panel patient-monitor-panel"><div class="panel-header"><div><span class="section-kicker">Patient monitoring</span><h2>All glucose profiles</h2></div><div class="status-filter" role="group" aria-label="Filter patients"><button class="is-active" type="button" data-patient-filter="all">All</button><button type="button" data-patient-filter="attention">Needs attention</button><button type="button" data-patient-filter="stable">In range</button></div></div><div class="table-wrap patient-table-wrap"><table class="patient-table"><thead><tr><th>Patient</th><th>Latest glucose</th><th>7-day average</th><th>In range</th><th>Last entry</th><th>Status</th><th></th></tr></thead><tbody id="doctorPatientBody"></tbody></table></div><div class="empty-state is-hidden" id="doctorEmpty"><span><i data-lucide="search-x"></i></span><h3>No matching patients</h3><p>Try a different name, ID or status filter.</p></div></article>
+          </section>
+
+          <section class="portal-screen is-hidden" data-screen="doctor-patient">
+            <button class="back-button" type="button" data-nav="doctor-overview"><i data-lucide="arrow-left"></i> All patients</button>
+            <div class="patient-detail-heading"><div class="patient-identity"><span class="large-avatar" id="detailInitials">AS</span><div><p class="page-kicker" id="detailPatientId">KWC-1028</p><h1 id="detailName">Ananya Sharma</h1><p id="detailMeta">32 years · Female · Type 2 diabetes</p></div></div><span class="status-badge good" id="detailStatus">Within range</span></div>
+            <div class="metric-grid detail-metrics"><article class="stat-card"><small>Latest glucose</small><strong id="detailLatest">126 <em>mg/dL</em></strong><span id="detailLatestMeta">Fasting · Today, 8:10 am</span></article><article class="stat-card"><small>7-day average</small><strong id="detailAverage">124 <em>mg/dL</em></strong><span>Across recorded readings</span></article><article class="stat-card"><small>In target range</small><strong id="detailRange">82<em>%</em></strong><span id="detailTarget">Fasting 70–130 · Non-fasting 70–180 mg/dL</span></article><article class="stat-card"><small>Last recorded</small><strong id="detailLastSeen" class="date-value">Today</strong><span id="detailLastSeenTime">8:10 am</span></article></div>
+            <article class="panel full-chart-panel"><div class="panel-header"><div><span class="section-kicker">Patient glucose</span><h2>30-day trend</h2></div><div class="chart-legend"><span><b class="legend-line"></b> Reading</span><span><b class="legend-band fasting"></b> Fasting target</span><span><b class="legend-band non-fasting"></b> Non-fasting target</span></div></div><div class="chart-wrap large"><svg id="doctorPatientChart" viewBox="0 0 980 360" role="img" aria-label="Selected patient glucose trend"></svg></div></article>
+            <article class="panel heatmap-panel doctor-heatmap-panel">
+              <div class="panel-header heatmap-panel-header"><div><span class="section-kicker">Meal-time comparison</span><h2 id="doctorHeatmapPeriodTitle">Last 14 days</h2><p id="doctorHeatmapTargetCopy">Fasting 70–130 · Non-fasting 70–180 mg/dL</p></div><div class="doctor-heatmap-actions"><div class="range-control" role="group" aria-label="Doctor heat map period"><button type="button" data-doctor-heatmap-range="7">7 days</button><button class="is-active" type="button" data-doctor-heatmap-range="14">14 days</button><button type="button" data-doctor-heatmap-range="30">30 days</button></div><div class="heatmap-legend" aria-label="Heat map legend"><span><b class="low"></b> Below target</span><span><b class="good"></b> In target</span><span><b class="high"></b> Above target</span><span><b class="empty"></b> No reading</span></div></div></div>
+              <div class="heatmap-empty-notice is-hidden" id="doctorHeatmapEmpty"><i data-lucide="info"></i><span>No glucose values were recorded in this period.</span></div>
+              <div class="heatmap-scroll"><table class="heatmap-table" aria-label="Selected patient glucose readings by day and capture time"><thead id="doctorHeatmapHead"></thead><tbody id="doctorHeatmapBody"></tbody></table></div>
+              <p class="clinical-disclaimer heatmap-disclaimer"><i data-lucide="triangle-alert"></i> Colours use this patient’s fasting or non-fasting range according to each reading context.</p>
+            </article>
+            <div class="two-column-grid detail-lower-grid"><article class="panel patient-contact-card"><div class="panel-header"><div><span class="section-kicker">Profile</span><h2>Patient details</h2></div></div><dl id="detailProfile"></dl></article><article class="panel history-panel"><div class="panel-header"><div><span class="section-kicker">Latest records</span><h2>Glucose history</h2></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Context</th><th>Value</th><th>Status</th></tr></thead><tbody id="doctorHistoryBody"></tbody></table></div></article></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="assets/lucide.min.js"></script>
+    <script src="config.js?v=3.4.0"></script>
+    <script src="aws-client.js?v=3.4.0"></script>
+    <script src="app.js?v=3.4.0"></script>
+  </body>
+</html>
