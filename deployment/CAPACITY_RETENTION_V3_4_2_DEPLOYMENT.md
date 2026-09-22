@@ -106,3 +106,4 @@ Continue only when the status is `Successful` and retention is `120`.
 ## Rollback
 
 Restore `kaarya-lambda-backup-before-v3_4_2.zip` using `aws lambda update-function-code`. If required, repeat the environment update using the previous retention value. A rollback does not rewrite `expiresAt` on readings already created by either version.
+

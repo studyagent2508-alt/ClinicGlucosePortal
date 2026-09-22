@@ -997,7 +997,8 @@
       }
       toast(error.message || "Sign-in could not be completed.", "error");
     } finally {
-      button.disabled = false;    }
+      button.disabled = false;
+    }
   }
 
   async function handleRegistrationSubmit(event) {
